@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brandon Xie | Personal Portfolio & AP CS Guide</title>
+  
+  <!-- Exact Inline SVG Favicon from Brandon's Code -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'><rect width='16' height='16' fill='black'/><path d='M8 1h1v1H8zM7 2h3v1H7zM7 3h3v1H7zM8 4h1v1H8zM5 5h7v1H5zM8 6h1v4H8zM7 10h3v1H7zM6 11h5v1H6zM5 12h7v1H5z' fill='white'/><path d='M7 1h1v1H7zM6 2h1v1H6zM6 3h1v1H6zM7 4h1v1H7zM7 6h1v4H7zM6 10h1v1H6zM5 11h1v1H5zM4 12h1v1H4z' fill='%23e0e0e0'/></svg>">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- FontAwesome Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              900: '#14532d',
+            },
+            tech: {
+              50: '#f0f9ff',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .tab-content {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+    .tab-content.active {
+      display: block;
+      opacity: 1;
+    }
+    .glass-effect {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 font-sans min-h-screen flex flex-col transition-colors duration-200">
+
+  <!-- Navigation Bar Header -->
+  <header class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-800 glass-effect">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        
+        <!-- Logo / Name -->
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white font-bold text-xl shadow-md shadow-emerald-500/20">
+            BX
+          </div>
+          <div>
+            <h1 class="text-lg font-bold bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent">
+              Brandon Xie
+            </h1>
+            <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">AP CS & Career Portfolio</p>
+          </div>
+        </div>
+
+        <!-- Desktop Navigation Tabs & Dark Mode Toggle -->
+        <div class="flex items-center gap-2 sm:gap-4">
+          <nav class="flex p-1 bg-slate-100 dark:bg-slate-800 rounded-xl text-sm font-medium">
+            <button onclick="switchTab('tab-main')" id="btn-tab-main" 
+              class="tab-btn px-3 sm:px-4 py-2 rounded-lg transition-all duration-200 flex items-center gap-2 bg-white dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 shadow-sm">
+              <i class="fa-solid fa-graduation-cap"></i>
+              <span class="hidden sm:inline">Main & AP CS Guide</span>
+              <span class="sm:hidden">AP CS</span>
+            </button>
+            <button onclick="switchTab('tab-chess')" id="btn-tab-chess" 
+              class="tab-btn px-3 sm:px-4 py-2 rounded-lg transition-all duration-200 flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">
+              <i class="fa-solid fa-chess-pawn"></i>
+              <span class="hidden sm:inline">Chess Favicon Project</span>
+              <span class="sm:hidden">Chess Project</span>
+            </button>
+          </nav>
+
+          <!-- Theme Toggle Button -->
+          <button id="theme-toggle" onclick="toggleDarkMode()" aria-label="Toggle Theme"
+            class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+            <i id="theme-toggle-dark-icon" class="fa-solid fa-moon text-lg hidden"></i>
+            <i id="theme-toggle-light-icon" class="fa-solid fa-sun text-lg"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- TAB 1: MAIN & AP CS GUIDE -->
+    <div id="tab-main" class="tab-content active space-y-10">
+      
+      <!-- Hero & Career Goals Banner -->
+      <section class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-600 via-teal-700 to-slate-900 text-white p-8 sm:p-10 shadow-2xl">
+        <div class="absolute -right-10 -bottom-10 w-80 h-80 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="relative z-10 max-w-3xl space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-emerald-200 text-xs font-semibold uppercase tracking-wider">
+            <i class="fa-solid fa-compass"></i> Personal Goal & AP CS Portal
+          </div>
+          <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+            Hi, I'm <span class="text-emerald-300">Brandon Xie</span>.
+          </h2>
+          <p class="text-slate-200 text-base sm:text-lg leading-relaxed">
+            Welcome to my personal webpage! Here you can explore my career aspirations after high school, along with my comprehensive review guide for AP Computer Science Principles Units 1 & 2.
+          </p>
+        </div>
+
+        <!-- After High School Highlight Card -->
+        <div class="mt-8 pt-8 border-t border-white/15 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="md:col-span-2 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/10">
+            <div class="flex items-center gap-3 text-emerald-300 font-bold text-xl mb-2">
+              <i class="fa-solid fa-user-doctor text-2xl"></i>
+              <h3>After High School Goal</h3>
+            </div>
+            <p class="text-slate-100 text-base leading-relaxed">
+              After finishing high school, I am excited to study to become a <strong class="text-emerald-300 underline decoration-emerald-400/50">veterinarian (vet)</strong>. I am passionate about animal health, medicine, and welfare. I look forward to integrating technology and modern data management into veterinary medicine to improve diagnostics and animal care!
+            </p>
+          </div>
+
+          <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/10 flex flex-col justify-center items-center text-center">
+            <div class="w-14 h-14 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-300 text-2xl mb-3">
+              <i class="fa-solid fa-paw"></i>
+            </div>
+            <h4 class="font-semibold text-white">Veterinary Medicine</h4>
+            <p class="text-xs text-slate-300 mt-1">Combining biology, care & modern computer science</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interactive Vocabulary Search Bar -->
+      <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-md border border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3 w-full sm:w-auto">
+          <i class="fa-solid fa-magnifying-glass text-slate-400 text-lg ml-2"></i>
+          <input type="text" id="vocab-search" onkeyup="filterVocab()" placeholder="Search Unit 1 & 2 terms (e.g. bit, IP, UDP, router)..." 
+            class="w-full sm:w-80 bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-slate-100 px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
+        </div>
+        <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+          <i class="fa-solid fa-filter"></i>
+          <span>Filtering terms automatically across all units</span>
+        </div>
+      </div>
+
+      <!-- SECTION: UNIT 1 DATA -->
+      <section id="unit1-section" class="space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4 gap-2">
+          <div>
+            <div class="inline-flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-semibold text-xs tracking-wider uppercase">
+              <i class="fa-solid fa-database"></i> AP CS Review
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">Unit 1: Data</h2>
+          </div>
+          <span class="text-xs bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300 px-3 py-1 rounded-full font-medium w-fit">
+            7 Essential Concepts
+          </span>
+        </div>
+
+        <!-- Unit 1 Image & Description Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+          
+          <!-- Vocab Cards Grid -->
+          <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            
+            <div class="vocab-card bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-bold text-emerald-600 dark:text-emerald-400 text-lg">bit</span>
+                <span class="text-xs bg-slate-100 dark:bg-slate-700 px-2 py-0.5 rounded text-slate-500">Binary</span>
+              </div>
+              <p class="text-sm text-slate-600 dark:text-slate-300">
+                A binary digit, either 0 or 1. <a href="https://apclassroom.collegeboard.org" target="_blank" class="text-emerald-500 hover:underline inline-flex items-center gap-1">Learn more in Binary numbers <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a>.
+              </p>
+            </div>
+
+            <div class="vocab-card bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-bold text-emerald-600 dark:text-emerald-400 text-lg">byte</span>
+                <span class="text-xs bg-slate-100 dark:bg-slate-700 px-2 py-0.5 rounded text-slate-500">8 Bits</span>
+              </div>
+              <p class="text-sm text-slate-600 dark:text-slate-300">
+                A sequence of 8 bits. <a href="https://apclassroom.collegeboard.org" target="_blank" class="text-emerald-500 hover:underline inline-flex items-center gap-1">Learn more in Bytes <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a>.
+              </p>
+            </div>
+
+            <div class="vocab-card bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-bold text-emerald-600 dark:text-emerald-400 text-lg">roundoff</span>
+                <span class="text-xs bg-slate-100 dark:bg-slate-700 px-2 py-0.5 rounded text-slate-500">Precision Limit</span>
+              </div>
+              <p class="text-sm text-slate-600 dark:text-slate-300">
+                Error that results when the number of bits is not enough to represent the number with full precision (like using 3 digits to represent &pi; as 3.14). <a href="https://apclassroom.collegeboard.org" target="_blank" class="text-emerald-500 hover:underline inline-flex items-center gap-1">Learn more in Number limits, overflow, and roundoff <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a>.
+              </p>
+            </div>
+
+            <div class="vocab-card bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-bold text-emerald-600 dark:text-emerald-400 text-lg">analog data</span>
+                <span class="text-xs bg-slate-100 dark:bg-slate-700 px-2 py-0.5 rounded text-slate-500">Continuous</span>
+              </div>
+              <p class="text-sm text-slate-600 dark:text-slate-300">
+                Values that change smoothly, rather than in discrete intervals, over time. For example, the pitch and volume of a live concert. <a href="https://apclassroom.collegeboard.org" target="_blank" class="text-emerald-500 hover:underline inline-flex items-center gap-1">Learn more in From analog to digital data <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a>.
+              </p>
+            </div>
+
+            <div class="vocab-card bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-bold text-emerald-600 dark:text-emerald-400 text-lg">lossless</span>
+                <span class="text-xs bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300 px-2 py-0.5 rounded">Exact Recovery</span>
+              </div>
+              <p class="text-sm text-slate-600 dark:text-slate-300">
+                Compressing data in a way that preserves all data away and allows full recovery of the original. <a href="https://apclassroom.collegeboard.org" target="_blank" class="text-emerald-500 hover:underline inline-flex items-center gap-1">Learn more in Data compression <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a>.
+              </p>
+            </div>
+
+            <div class="vocab-card bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-bold text-emerald-600 dark:text-emerald-400 text-lg">lossy</span>
+                <span class="text-xs bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300 px-2 py-0.5 rounded">Data Discarded</span>
+              </div>
+              <p class="text-sm text-slate-600 dark:text-slate-300">
+                Compressing data in a way that discards some data and makes it impossible to recover the original. <a href="https://apclassroom.collegeboard.org" target="_blank" class="text-emerald-500 hover:underline inline-flex items-center gap-1">Learn more in Data compression <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a>.
+              </p>
+            </div>
+
+            <div class="vocab-card sm:col-span-2 bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-bold text-emerald-600 dark:text-emerald-400 text-lg">metadata</span>
+                <span class="text-xs bg-slate-100 dark:bg-slate-700 px-2 py-0.5 rounded text-slate-500">Data About Data</span>
+              </div>
+              <p class="text-sm text-slate-600 dark:text-slate-300">
+                Data about data, like descriptive information about a file or a row in a database (e.g., file size, creation date, image resolution).
+              </p>
+            </div>
+
+          </div>
+
+          <!-- Unit 1 Image 1 Card -->
+          <div class="bg-white dark:bg-slate-800 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-md">
+            <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80" 
+              alt="Digital Binary Data Representation" 
+              class="w-full h-52 object-cover"
+              onerror="this.src='https://placehold.co/800x500/0f172a/22c55e?text=Unit+1:+Binary+Data'">
+            <div class="p-5">
+              <div class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400 mb-2">
+                <i class="fa-solid fa-image"></i> Topic Picture 1: Digital Data Representation
+              </div>
+              <h3 class="font-bold text-slate-900 dark:text-white mb-2">Bits, Bytes & Digital Encoding</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                Computers store all information—from sound waves to high-res graphics—as binary 0s and 1s. Bit depth determines the fidelity and file size of digital media.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECTION: UNIT 2 COMPUTER SYSTEMS AND NETWORKS -->
+      <section id="unit2-section" class="space-y-8 pt-6 border-t border-slate-200 dark:border-slate-800">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4 gap-2">
+          <div>
+            <div class="inline-flex items-center gap-2 text-tech-600 dark:text-tech-500 font-semibold text-xs tracking-wider uppercase">
+              <i class="fa-solid fa-network-wired"></i> AP CS Review
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">Unit 2: Computer Systems and Networks – Review</h2>
+          </div>
+          <span class="text-xs bg-tech-50 text-tech-700 dark:bg-sky-950 dark:text-tech-500 px-3 py-1 rounded-full font-medium w-fit border border-tech-500/20">
+            Systems, Protocols & Architecture
+          </span>
+        </div>
+
+        <!-- Subsection 1: Vocabulary -->
+        <div class="space-y-4">
+          <h3 class="text-xl font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+            <i class="fa-solid fa-book-open text-tech-500"></i> Vocabulary
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            
+            <div class="vocab-card bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+              <h4 class="font-bold text-tech-600 dark:text-tech-500 mb-1">Computing Device</h4>
+              <p class="text-xs text-slate-600 dark:text-slate-300">
+                A physical device that can run a program (e.g., computer, smartphone, smart sensor).
+              </p>
+            </div>
+
+            <div class="vocab-card bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+              <h4 class="font-bold text-tech-600 dark:text-tech-500 mb-1">Computer Network</h4>
+              <p class="text-xs text-slate-600 dark:text-slate-300">
+                A group of interconnected computing devices capable of sending or receiving data.
+              </p>
+            </div>
+
+            <div class="vocab-card bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+              <h4 class="font-bold text-tech-600 dark:text-tech-500 mb-1">Path</h4>
+              <p class="text-xs text-slate-600 dark:text-slate-300">
+                The series of connections between computing devices on a network, starting with the sender and ending with the receiver.
+              </p>
+            </div>
+
+            <div class="vocab-card bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+              <h4 class="font-bold text-tech-600 dark:text-tech-500 mb-1">Protocol</h4>
+              <p class="text-xs text-slate-600 dark:text-slate-300">
+                An agreed-upon set of rules that specify how systems behave and communicate.
+              </p>
+            </div>
+
+            <div class="vocab-card bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+              <h4 class="font-bold text-tech-600 dark:text-tech-500 mb-1">Fault Tolerant</h4>
+              <p class="text-xs text-slate-600 dark:text-slate-300">
+                A system’s ability to continue functioning even if individual components fail.
+              </p>
+            </div>
+
+            <div class="vocab-card bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+              <h4 class="font-bold text-tech-600 dark:text-tech-500 mb-1">Scalability</h4>
+              <p class="text-xs text-slate-600 dark:text-slate-300">
+                The ability of a system to expand or contract to meet new demands.
+              </p>
+            </div>
+
+            <div class="vocab-card bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+              <h4 class="font-bold text-tech-600 dark:text-tech-500 mb-1">Bandwidth</h4>
+              <p class="text-xs text-slate-600 dark:text-slate-300">
+                The maximum transmission capacity of a system, measured by bit rate (bits per second).
+              </p>
+            </div>
+
+            <div class="vocab-card bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+              <h4 class="font-bold text-tech-600 dark:text-tech-500 mb-1">URL</h4>
+              <p class="text-xs text-slate-600 dark:text-slate-300">
+                Uniform Resource Locator: An easy-to-remember web address (e.g., www.example.com).
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Subsection 2: Internet Structure and Layers & Image 2 -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+          
+          <div class="lg:col-span-2 space-y-4">
+            <h3 class="text-xl font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+              <i class="fa-solid fa-layer-group text-tech-500"></i> Internet Structure and Layers
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              
+              <div class="vocab-card bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+                <span class="text-xs font-semibold text-slate-400 block mb-1">Physical Layer</span>
+                <h4 class="font-bold text-slate-900 dark:text-white text-sm mb-1">Physical Network</h4>
+                <p class="text-xs text-slate-600 dark:text-slate-300">The hardware and physical connections carrying internet signals.</p>
+              </div>
+
+              <div class="vocab-card bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+                <span class="text-xs font-semibold text-slate-400 block mb-1">Routing Protocol</span>
+                <h4 class="font-bold text-slate-900 dark:text-white text-sm mb-1">Internet Protocol (IP)</h4>
+                <p class="text-xs text-slate-600 dark:text-slate-300">Assigns unique IP addresses to devices and routes data between them.</p>
+              </div>
+
+              <div class="vocab-card bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+                <span class="text-xs font-semibold text-slate-400 block mb-1">Reliable Transport</span>
+                <h4 class="font-bold text-slate-900 dark:text-white text-sm mb-1">TCP</h4>
+                <p class="text-xs text-slate-600 dark:text-slate-300">Transmission Control Protocol: Ensures reliable, ordered, error-checked delivery.</p>
+              </div>
+
+              <div class="vocab-card bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+                <span class="text-xs font-semibold text-slate-400 block mb-1">Fast Transport</span>
+                <h4 class="font-bold text-slate-900 dark:text-white text-sm mb-1">UDP</h4>
+                <p class="text-xs text-slate-600 dark:text-slate-300">User Datagram Protocol: Lightweight, minimal error-checking (faster, less reliable).</p>
+              </div>
+
+              <div class="vocab-card bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+                <span class="text-xs font-semibold text-slate-400 block mb-1">Data Units</span>
+                <h4 class="font-bold text-slate-900 dark:text-white text-sm mb-1">Packets</h4>
+                <p class="text-xs text-slate-600 dark:text-slate-300">Small chunks into which larger messages are divided for transmission across routes.</p>
+              </div>
+
+              <div class="vocab-card bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+                <span class="text-xs font-semibold text-slate-400 block mb-1">Network Hardware</span>
+                <h4 class="font-bold text-slate-900 dark:text-white text-sm mb-1">Routers</h4>
+                <p class="text-xs text-slate-600 dark:text-slate-300">Specialized computers forwarding data across networks choosing the fastest path.</p>
+              </div>
+
+              <div class="vocab-card bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+                <span class="text-xs font-semibold text-slate-400 block mb-1">Address Directory</span>
+                <h4 class="font-bold text-slate-900 dark:text-white text-sm mb-1">DNS</h4>
+                <p class="text-xs text-slate-600 dark:text-slate-300">Domain Name System: Translates human-readable domain names to IP addresses.</p>
+              </div>
+
+              <div class="vocab-card bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+                <span class="text-xs font-semibold text-slate-400 block mb-1">Web Protocol</span>
+                <h4 class="font-bold text-slate-900 dark:text-white text-sm mb-1">HTTP</h4>
+                <p class="text-xs text-slate-600 dark:text-slate-300">Hypertext Transfer Protocol: Transmits web pages and media on the web.</p>
+              </div>
+
+              <div class="vocab-card bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+                <span class="text-xs font-semibold text-slate-400 block mb-1">Information System</span>
+                <h4 class="font-bold text-slate-900 dark:text-white text-sm mb-1">World Wide Web (WWW)</h4>
+                <p class="text-xs text-slate-600 dark:text-slate-300">System of linked pages, media, and files browsable over HTTP.</p>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Unit 2 Image 2 Card -->
+          <div class="bg-white dark:bg-slate-800 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-md">
+            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80" 
+              alt="Global Computer Networks and Server Infrastructure" 
+              class="w-full h-56 object-cover"
+              onerror="this.src='https://placehold.co/800x500/0f172a/0ea5e9?text=Unit+2:+Computer+Networks'">
+            <div class="p-5">
+              <div class="inline-flex items-center gap-1.5 text-xs font-semibold text-tech-600 dark:text-tech-500 mb-2">
+                <i class="fa-solid fa-image"></i> Topic Picture 2: Global Networks & Packet Routing
+              </div>
+              <h3 class="font-bold text-slate-900 dark:text-white mb-2">Interconnected Distributed Infrastructure</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                The Internet connects billions of computing devices through physical fiber cables, routers, and dynamic packet switching under standardized protocols like IP and TCP.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Subsection 3: Key Concepts & Interactive IP Space Visualizer -->
+        <div class="space-y-6 pt-4">
+          <h3 class="text-xl font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+            <i class="fa-solid fa-lightbulb text-amber-500"></i> Key Concepts
+          </h3>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            
+            <div class="vocab-card bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 space-y-2">
+              <div class="w-8 h-8 rounded-lg bg-indigo-500/10 text-indigo-500 flex items-center justify-center font-bold text-sm">
+                1
+              </div>
+              <h4 class="font-bold text-slate-900 dark:text-white text-sm">Message Delivery</h4>
+              <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                Messages are split into packets, which may take different paths through the network. The internet does not require a direct connection between sender and receiver.
+              </p>
+            </div>
+
+            <div class="vocab-card bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 space-y-2">
+              <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-500 flex items-center justify-center font-bold text-sm">
+                2
+              </div>
+              <h4 class="font-bold text-slate-900 dark:text-white text-sm">Redundancy</h4>
+              <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                Multiple pathways exist in the network so if one route fails, packets can automatically re-route through another available path.
+              </p>
+            </div>
+
+            <div class="vocab-card bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 space-y-2">
+              <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-500 flex items-center justify-center font-bold text-sm">
+                3
+              </div>
+              <h4 class="font-bold text-slate-900 dark:text-white text-sm">Fault Tolerance</h4>
+              <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                Because of redundancy, the internet can continue working smoothly even if individual parts or routers are damaged or offline.
+              </p>
+            </div>
+
+            <div class="vocab-card bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 space-y-2">
+              <div class="w-8 h-8 rounded-lg bg-sky-500/10 text-sky-500 flex items-center justify-center font-bold text-sm">
+                4
+              </div>
+              <h4 class="font-bold text-slate-900 dark:text-white text-sm">Scalability</h4>
+              <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                The internet is designed to grow seamlessly and support billions of devices globally without needing a overhaul of its core structure.
+              </p>
+            </div>
+
+          </div>
+
+          <!-- IP Addressing & Encoding Formula Card -->
+          <div class="bg-gradient-to-br from-slate-900 to-indigo-950 text-white rounded-3xl p-6 sm:p-8 shadow-xl border border-indigo-500/20">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-6">
+              <div>
+                <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest">Core Math Concept</span>
+                <h4 class="text-2xl font-bold text-white mt-1">IP Addressing & Encoding</h4>
+                <p class="text-xs text-slate-300 mt-1">Comparing 32-bit IPv4 vs IPv6 expansion formulas</p>
+              </div>
+              <div class="flex items-center gap-2 bg-indigo-500/20 px-4 py-2 rounded-xl border border-indigo-400/30 text-xs text-indigo-200 font-mono">
+                <i class="fa-solid fa-calculator text-indigo-400"></i> AP CS Math Standard
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="bg-white/5 rounded-2xl p-5 border border-white/10 space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-sm font-bold text-indigo-300">IPv4 Standard</span>
+                  <span class="text-xs bg-indigo-500/30 text-indigo-200 px-2 py-0.5 rounded">32 bits</span>
+                </div>
+                <p class="text-xs text-slate-300">
+                  IPv4 uses 32-bit addresses formatted as 4 octets.
+                </p>
+                <div class="p-3 bg-black/40 rounded-xl font-mono text-emerald-400 text-sm">
+                  2<sup>32</sup> = 4,294,967,296 unique addresses
+                </div>
+              </div>
+
+              <div class="bg-white/5 rounded-2xl p-5 border border-white/10 space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-sm font-bold text-teal-300">IPv6 Expansion Multiplier</span>
+                  <span class="text-xs bg-teal-500/30 text-teal-200 px-2 py-0.5 rounded">Adding 16 bits</span>
+                </div>
+                <p class="text-xs text-slate-300">
+                  Adding just 16 more bits increases the address space capacity exponentially!
+                </p>
+                <div class="p-3 bg-black/40 rounded-xl font-mono text-teal-300 text-sm">
+                  2<sup>16</sup> = 65,536 times larger address space
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECTION: EMBEDDED VIDEO ON HOW THE INTERNET WORKS -->
+      <section class="pt-6 border-t border-slate-200 dark:border-slate-800 space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <div class="inline-flex items-center gap-2 text-rose-600 dark:text-rose-400 font-semibold text-xs tracking-wider uppercase">
+              <i class="fa-solid fa-circle-play"></i> Educational Media
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">How the Internet Works</h2>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Watch Code.org's explanation of wires, wifi, packets, and IP routing</p>
+        </div>
+
+        <div class="bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-xl max-w-4xl mx-auto">
+          <div class="relative w-full rounded-2xl overflow-hidden bg-black shadow-inner" style="padding-bottom: 56.25%;">
+            <iframe 
+              class="absolute top-0 left-0 w-full h-full rounded-2xl"
+              src="https://www.youtube-nocookie.com/embed/5o8CwafChnU?rel=0" 
+              title="How the Internet Works - Wire, Cables & WiFi" 
+              frameborder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              allowfullscreen>
+            </iframe>
+          </div>
+          <div class="mt-4 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 dark:text-slate-400 gap-2">
+            <span class="flex items-center gap-2">
+              <i class="fa-brands fa-youtube text-red-500 text-base"></i> Video resource provided for AP CS Unit 2 Network Protocols
+            </span>
+            <span class="font-medium text-slate-600 dark:text-slate-300">Topic: Physical Connections & Packets</span>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- TAB 2: PREVIOUS PROJECT (CHESS FAVICON) -->
+    <div id="tab-chess" class="tab-content space-y-8">
+      
+      <!-- Legacy Banner -->
+      <div class="bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-amber-500/10 dark:from-amber-500/20 dark:to-orange-500/20 border border-amber-500/30 rounded-2xl p-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center font-bold text-xl">
+            ♟️
+          </div>
+          <div>
+            <h3 class="font-bold text-amber-900 dark:text-amber-200 text-sm">Previous Project Content Integrated</h3>
+            <p class="text-xs text-amber-700 dark:text-amber-300">Below is your original webpage layout, inline SVG favicon renderer, personal reflections, and AI disclosure verbatim.</p>
+          </div>
+        </div>
+        <span class="text-xs bg-amber-200 dark:bg-amber-900 text-amber-800 dark:text-amber-200 px-3 py-1 rounded-full font-semibold hidden sm:block">
+          Legacy View
+        </span>
+      </div>
+
+      <!-- User's Exact Previous Webpage Content -->
+      <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-10 border border-slate-200 dark:border-slate-700 shadow-xl space-y-8">
+        
+        <!-- Header & Display -->
+        <header class="border-b border-slate-200 dark:border-slate-700 pb-6">
+          <h1 class="text-3xl font-extrabold text-slate-900 dark:text-white">Brandon's Personal Web Page</h1>
+          <p class="text-sm font-semibold text-slate-600 dark:text-slate-300 mt-2"><strong>Favicon Preview:</strong></p>
+        </header>
+
+        <!-- Draws your exact 16x16 pixel grid on the page at 128x128 -->
+        <div class="flex flex-col sm:flex-row items-center gap-6 p-6 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 w-fit">
+          <div class="p-2 bg-black rounded-xl shadow-md">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="128" height="128" shape-rendering="crispEdges">
+              <!-- Black Background -->
+              <rect width="16" height="16" fill="black"/>
+              
+              <!-- White Pixels -->
+              <path d="M8 1h1v1H8z
+                       M7 2h3v1H7z
+                       M7 3h3v1H7z
+                       M8 4h1v1H8z
+                       M5 5h7v1H5z
+                       M8 6h1v4H8z
+                       M7 10h3v1H7z
+                       M6 11h5v1H6z
+                       M5 12h7v1H5z" fill="white"/>
+                       
+              <!-- Light Grey Shading Pixels (Left edge highlights) -->
+              <path d="M7 1h1v1H7z
+                       M6 2h1v1H6z
+                       M6 3h1v1H6z
+                       M7 4h1v1H7z
+                       M7 6h1v4H7z
+                       M6 10h1v1H6z
+                       M5 11h1v1H5z
+                       M4 12h1v1H4z" fill="#e0e0e0"/>
+            </svg>
+          </div>
+
+          <div class="space-y-1 text-center sm:text-left">
+            <span class="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-bold uppercase">16x16 Pixel Grid Vector</span>
+            <h4 class="font-bold text-slate-800 dark:text-slate-200">White Pawn Favicon Artwork</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400 max-w-sm">
+              Custom-crafted pixel grid drawing representing a white chess pawn with shaded contours.
+            </p>
+          </div>
+        </div>
+
+        <!-- About Me Section -->
+        <section class="space-y-3">
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-user text-emerald-500"></i> About Me
+          </h2>
+          <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed max-w-3xl">
+            Hi, I'm Brandon! In my free time, I really enjoy playing video games, reading, and playing chess. My family and I play chess together every weekend, which is one of my favorite traditions.
+          </p>
+        </section>
+
+        <!-- Reflections Section -->
+        <section class="space-y-4">
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-pen-to-square text-emerald-500"></i> Reflections
+          </h2>
+          
+          <div class="space-y-3 text-sm text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
+            <div class="p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl border border-slate-200 dark:border-slate-700">
+              <p>
+                When coding digital images, bit depth plays a major role in detail and performance. Comparing 12-bit versus 24-bit images, 24-bit offers significantly more bits per pixel (bpp), which provides millions more colors and far higher detail. However, this increased detail comes at the cost of much larger file sizes and slower transmission times over networks.
+              </p>
+            </div>
+
+            <div class="p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl border border-slate-200 dark:border-slate-700">
+              <p>
+                Hexadecimal is preferred in web development over binary because it is far more compact and human-readable. Writing color codes in hex (like #FFFFFF) takes fewer characters and is much easier to edit than writing out long strings of 1s and 0s.
+              </p>
+            </div>
+
+            <div class="p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl border border-slate-200 dark:border-slate-700">
+              <p>
+                I chose a white pawn for my favicon because my family loves playing chess together every weekend, making the piece meaningful to me.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- AI Disclosure Section -->
+        <section class="space-y-3 pt-4 border-t border-slate-200 dark:border-slate-700">
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-robot text-emerald-500"></i> AI Disclosure
+          </h2>
+          <p class="text-sm text-slate-600 dark:text-slate-300">Used Gemini. Prompts were:</p>
+          <ul class="list-disc list-inside space-y-2 text-xs text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 font-mono">
+            <li>"how do I make my favicon display html"</li>
+            <li>"what do I put in favicon code"</li>
+            <li>"help me make an html website that displays a white pawn picture as a favicon that is black and white"</li>
+            <li>"the Favicon isnt displaying"</li>
+            <li>"make it directly draw this instead of accessing a file, ask me questions to make it unique"</li>
+            <li>"my name is Brandon i like playing videogames, chess, and reading"</li>
+            <li>"pawn neck is too long and the base is too wide do it exactly like mine in a 16x16 grid don't edit my image just make the code draw exactly what I drew"</li>
+          </ul>
+        </section>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-6 mt-12 text-center text-xs text-slate-500 dark:text-slate-400">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p>&copy; 2026 Brandon Xie. Ready for deployment on GitHub Pages.</p>
+      <div class="flex items-center gap-4">
+        <span class="hover:text-emerald-500 transition-colors">AP Computer Science Principles Review</span>
+        <span>&bull;</span>
+        <span class="hover:text-emerald-500 transition-colors">Future Veterinarian</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function switchTab(tabId) {
+      // Hide all tabs
+      const contents = document.querySelectorAll('.tab-content');
+      contents.forEach(content => {
+        content.classList.remove('active');
+      });
+
+      // Show selected tab
+      const selectedTab = document.getElementById(tabId);
+      if (selectedTab) {
+        selectedTab.classList.add('active');
+      }
+
+      // Update button styling
+      const btnMain = document.getElementById('btn-tab-main');
+      const btnChess = document.getElementById('btn-tab-chess');
+
+      if (tabId === 'tab-main') {
+        btnMain.className = 'tab-btn px-3 sm:px-4 py-2 rounded-lg transition-all duration-200 flex items-center gap-2 bg-white dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 shadow-sm';
+        btnChess.className = 'tab-btn px-3 sm:px-4 py-2 rounded-lg transition-all duration-200 flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white';
+      } else {
+        btnChess.className = 'tab-btn px-3 sm:px-4 py-2 rounded-lg transition-all duration-200 flex items-center gap-2 bg-white dark:bg-slate-700 text-amber-600 dark:text-amber-400 shadow-sm';
+        btnMain.className = 'tab-btn px-3 sm:px-4 py-2 rounded-lg transition-all duration-200 flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white';
+      }
+
+      // Scroll to top smoothly
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function filterVocab() {
+      const input = document.getElementById('vocab-search').value.toLowerCase();
+      const cards = document.querySelectorAll('.vocab-card');
+
+      cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        if (text.includes(input)) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function toggleDarkMode() {
+      const htmlEl = document.documentElement;
+      const darkIcon = document.getElementById('theme-toggle-dark-icon');
+      const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+      if (htmlEl.classList.contains('dark')) {
+        htmlEl.classList.remove('dark');
+        darkIcon.classList.add('hidden');
+        lightIcon.classList.remove('hidden');
+        localStorage.setItem('theme', 'light');
+      } else {
+        htmlEl.classList.add('dark');
+        darkIcon.classList.remove('hidden');
+        lightIcon.classList.add('hidden');
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    // Set default dark mode or load saved theme
+    (function initTheme() {
+      const savedTheme = localStorage.getItem('theme');
+      const darkIcon = document.getElementById('theme-toggle-dark-icon');
+      const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+      if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+        if (darkIcon && lightIcon) {
+          darkIcon.classList.remove('hidden');
+          lightIcon.classList.add('hidden');
+        }
+      } else {
+        document.documentElement.classList.remove('dark');
+        if (darkIcon && lightIcon) {
+          darkIcon.classList.add('hidden');
+          lightIcon.classList.remove('hidden');
+        }
+      }
+    })();
+  </script>
+</body>
+</html>
